@@ -1,0 +1,32 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.kyuheon-kr/shell-use",
+  "description": "Let agents use the shell like a human.",
+  "title": "shell-use",
+  "repository": {
+    "url": "https://github.com/kyuheon-kr/shell-use",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "packages": [
+    {
+      "registryType": "oci",
+      "identifier": "ghcr.io/kyuheon-kr/shell-use:1.0.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "SHELL_USE_SESSIONS",
+          "description": "Comma-separated list of allowed session names",
+          "isRequired": true
+        },
+        {
+          "name": "SHELL_USE_SOCKET",
+          "description": "Path to tmux socket (default: /tmux/tmux.sock in Docker)",
+          "isRequired": false
+        }
+      ]
+    }
+  ]
+}

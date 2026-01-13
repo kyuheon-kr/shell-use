@@ -8,3 +8,5 @@ wheels/
 
 # Virtual environments
 .venv
+.mcpregistry_github_token
+.mcpregistry_registry_token
