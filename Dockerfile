@@ -1,5 +1,8 @@
 FROM python:3.12-slim
 
+# Label used by MCP clients to discover the server
+LABEL io.modelcontextprotocol.server.name="io.github.kyuheon-kr/shell-use"
+
 WORKDIR /app
 
 # Install tmux and ssh client for remote control
