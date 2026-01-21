@@ -37,6 +37,12 @@ docker build -t shell-use:latest .
 tmux new-session -s dev
 ```
 
+#### 2.1. Get the tmux socket path
+
+```bash
+SOCK="$(tmux display-message -p -F '#{socket_path}')"
+```
+
 #### 3. Configure your MCP client
 
 **Claude Code**:
@@ -45,7 +51,9 @@ tmux new-session -s dev
 claude mcp add shell-use \
   -e SHELL_USE_SESSIONS=dev \
   -- docker run -i --rm \
-  -v /tmp/tmux-$(id -u)/default:/tmux/tmux.sock \
+  --user "$(id -u):$(id -g)" \
+  -v "$(dirname "$SOCK")":/tmux \
+  -e SHELL_USE_SOCKET="/tmux/$(basename "$SOCK")" \
   -e SHELL_USE_SESSIONS \
   shell-use:latest
 ```
@@ -59,7 +67,9 @@ claude mcp add shell-use \
       "command": "docker",
       "args": [
         "run", "-i", "--rm",
-        "-v", "/tmp/tmux-1000/default:/tmux/tmux.sock",
+        "--user", "1000:1000",
+        "-v", "/tmp/tmux-1000:/tmux",
+        "-e", "SHELL_USE_SOCKET=/tmux/default",
         "-e", "SHELL_USE_SESSIONS",
         "shell-use:latest"
       ],
@@ -71,7 +81,8 @@ claude mcp add shell-use \
 }
 ```
 
-> Replace `1000` with your user ID (`id -u`).
+> Replace `1000` with your user ID (`id -u`), and replace `default` with the basename of your
+> socket path from `tmux display-message -p -F '#{socket_path}'`.
 
 ---
 
