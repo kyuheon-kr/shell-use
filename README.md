@@ -50,11 +50,10 @@ SOCK="$(tmux display-message -p -F '#{socket_path}')"
 
 ```bash
 claude mcp add shell-use \
-  -e SHELL_USE_SESSIONS=dev \
   -- docker run -i --rm \
   -v "$SOCK":/tmux/tmux.sock \
   -e SHELL_USE_SOCKET=/tmux/tmux.sock \
-  -e SHELL_USE_SESSIONS \
+  -e SHELL_USE_SESSIONS=dev \
   shell-use:latest
 ```
 
@@ -69,12 +68,9 @@ claude mcp add shell-use \
         "run", "-i", "--rm",
         "-v", "/tmp/tmux-1000/default:/tmux/tmux.sock",
         "-e", "SHELL_USE_SOCKET=/tmux/tmux.sock",
-        "-e", "SHELL_USE_SESSIONS",
+        "-e", "SHELL_USE_SESSIONS=dev",
         "shell-use:latest"
-      ],
-      "env": {
-        "SHELL_USE_SESSIONS": "dev"
-      }
+      ]
     }
   }
 }
